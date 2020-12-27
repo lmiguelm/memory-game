@@ -9,63 +9,77 @@
   </head>
 
   <body>
-   <div class="container">
-     <div class="placar-container">
-      <div class="pontos led-computer"></div>
-      <div class="pontos led-computer"></div>
-      <div class="pontos led-computer"></div>
-      <div class="pontos led-computer"></div>
-      <div class="pontos led-computer"></div>
-      <div class="pontos led-computer"></div>
-     </div>
-      <div class="panel">
-        <div class="button-cumputer block"></div>
-        <div class="button-cumputer block"></div>
-        <div class="button-cumputer block"></div> 
-        <div class="button-cumputer block"></div>
-        <div class="button-cumputer block"></div>
-        <div class="button-cumputer block"></div>
-        <div class="button-cumputer block"></div>
-        <div class="button-cumputer block"></div>
-        <div class="button-cumputer block"></div>
+
+    <div class="mobile">
+      <button id="play-mobile" class="play ">Jogar</button>
+      <button id="end-mobile" class="end hide-button">Parar</button>
+    </div>
+
+    <div class="game">
+      <div class="container">
+        <div class="placar-container">
+         <div class="pontos led-computer"></div>
+         <div class="pontos led-computer"></div>
+         <div class="pontos led-computer"></div>
+         <div class="pontos led-computer"></div>
+         <div class="pontos led-computer"></div>
+         <div class="pontos led-computer"></div>
+        </div>
+         <div class="panel">
+           <div class="button-cumputer block"></div>
+           <div class="button-cumputer block"></div>
+           <div class="button-cumputer block"></div> 
+           <div class="button-cumputer block"></div>
+           <div class="button-cumputer block"></div>
+           <div class="button-cumputer block"></div>
+           <div class="button-cumputer block"></div>
+           <div class="button-cumputer block"></div>
+           <div class="button-cumputer block"></div>
+         </div>
       </div>
-   </div>
-
-   <button id="play" class="play">Jogar</button>
-   <button id="end" class="end hide-button">Parar</button>
-
-   <div class="container">
-    <div class="placar-container">
-      <div class="pontos led-player"></div>
-      <div class="pontos led-player"></div>
-      <div class="pontos led-player"></div>
-      <div class="pontos led-player"></div>
-      <div class="pontos led-player"></div>
-      <div class="pontos led-player"></div>
+   
+     <div class="desktop">
+      <button id="play-desktop" class="play">Jogar</button>
+      <button id="end-desktop" class="end hide-button ">Parar</button>
+     </div>
+   
+      <div class="container">
+       <div class="placar-container">
+         <div class="pontos led-player"></div>
+         <div class="pontos led-player"></div>
+         <div class="pontos led-player"></div>
+         <div class="pontos led-player"></div>
+         <div class="pontos led-player"></div>
+         <div class="pontos led-player"></div>
+       </div>
+       <div class="panel">
+         <div class="button-player block"></div>
+         <div class="button-player block"></div>
+         <div class="button-player block"></div>
+         <div class="button-player block"></div>
+         <div class="button-player block"></div>
+         <div class="button-player block"></div>
+         <div class="button-player block"></div>
+         <div class="button-player block"></div>
+         <div class="button-player block"></div>
+       </div>
+     </div>
     </div>
-    <div class="panel">
-      <div class="button-player block"></div>
-      <div class="button-player block"></div>
-      <div class="button-player block"></div>
-      <div class="button-player block"></div>
-      <div class="button-player block"></div>
-      <div class="button-player block"></div>
-      <div class="button-player block"></div>
-      <div class="button-player block"></div>
-      <div class="button-player block"></div>
-    </div>
-  </div>
 
   <script type="module">
 
     import game from './js/memory-game.js';
 
 
-    const play = document.getElementById('play');
-    const end = document.getElementById('end');
+    const playMobile = document.getElementById('play-mobile');
+    const endMobile = document.getElementById('end-mobile');
+    const playDesktop = document.getElementById('play-desktop');
+    const endDesktop = document.getElementById('end-desktop');
     
-    play.addEventListener('click', () => game.startGame(play, end));
-    end.addEventListener('click', () => game.resetGame());
+    playMobile.addEventListener('click', () => game.startGame());
+    endMobile.addEventListener('click', () => game.resetGame());
+    playDesktop.addEventListener('click', () => game.startGame());
+    endDesktop.addEventListener('click', () => game.resetGame());
 
   </script>
   </body>

@@ -1,7 +1,10 @@
 const game = {
   state: {
-    buttonPlay:  document.getElementById('play'),
-    buttonEnd:  document.getElementById('end'),
+    playMobile:  document.getElementById('play-mobile'),
+    endMobile:  document.getElementById('end-mobile'),
+
+    playDesktop: document.getElementById('play-desktop'),
+    endDesktop: document.getElementById('end-desktop'),
       
     ledsComputer: [],
     panelComputer: [],
@@ -44,8 +47,11 @@ const game = {
 
   async startGame(play, end) {
     // mudando classes do botão de inicar e parar de jogar...
-    play.classList.add('hide-button');
-    end.classList.remove('hide-button');
+    this.state.playMobile.classList.add('hide-button');
+    this.state.endMobile.classList.remove('hide-button');
+
+    this.state.playDesktop.classList.add('hide-button');
+    this.state.endDesktop.classList.remove('hide-button');
 
     // carregando os audios do jogo
     this.loadAudios();
@@ -67,25 +73,16 @@ const game = {
   async gameOver() {
 
     this.turnOffLights();
-    // mudando classes do botão de inicar e parar de jogar...
-    this.state.buttonPlay.classList.remove('hide-button');
-    this.state.buttonEnd.classList.add('hide-button');
-
+  
     // som de final do jogo...
     await this.state.audio.fail.play();
 
-    this.state.ledsComputer.forEach(element => {
-      element.style.animation = 'ledIncorrect .6s infinite';
-    });
-
-    this.state.panelComputer.forEach(element => {
-      element.style.animation = 'buttonIncorrect .6s infinite';
-    });
+    this.flashAllLeds('ledIncorrect', 'buttonIncorrect');
 
     await new Promise(() => {
       setTimeout(() => {
         window.location.reload();
-      }, 1500);
+      }, 2000);
     });
   },
   
@@ -184,22 +181,8 @@ const game = {
   winGame() {
 
     this.state.audio.complete.play();
-
-    this.state.ledsPlayer.forEach(element => {
-      element.classList.remove('pontoCorreto');
-      element.style.animation = 'ledCorrect .4s infinite';
-    });
-    this.state.panelPlayer.forEach(element => {
-      element.style.animation = 'buttonCorrect .4s infinite';
-    });
-
-    this.state.ledsComputer.forEach(element => {
-      element.classList.remove('pontoCorreto');
-      element.style.animation = 'ledCorrect .4s infinite';
-    });
-    this.state.panelComputer.forEach(element => {
-      element.style.animation = 'buttonCorrect .4s infinite';
-    });
+    this.flashAllLeds('ledCorrect', 'buttonCorrect');
+    
   },
 
   random() {
@@ -208,24 +191,27 @@ const game = {
 
   async goComputer() {
     setTimeout(() => {
+
       const random = this.random();
       this.state.computerCombination.push(random);
       this.state.computerCurrentCombination++;
 
-      const teste = new Promise(resolve => {
-        this.state.computerCombination.forEach((combination, index) => {
+      this.state.computerCombination.forEach((combination, index) => {
 
-          this.state.panelComputer[combination].style.animation = '';
+        this.state.panelComputer[combination].style.animation = '';
+        this.state.ledsComputer[index].style.animation = `ledCorrect .4s infinite`; 
+
+        setTimeout(() => {
+          this.state.ledsComputer[index].style.animation = ``; 
           this.state.ledsComputer[index].classList.add('pontoCorreto'); 
-          setTimeout(() => {
-            this.state.panelComputer[combination].style.animation = 'buttonCorrect .5s';
-            setTimeout(() => this.state.panelComputer[combination].style.animation = '', 300);
-            this.state.audio.combinations[combination].play();
-          }, 500 * (index + 1));
-          
-        });
-      });
+          this.state.panelComputer[combination].style.animation = 'buttonCorrect .5s';
+          setTimeout(() => this.state.panelComputer[combination].style.animation = '', 300);
+          this.state.audio.combinations[combination].play();
 
+        }, 500 * (index + 1));
+        
+      });
+    
       setTimeout(() => {
         this.state.panelPlayer.forEach(element => {
           element.classList.remove('block');
@@ -234,6 +220,32 @@ const game = {
 
     }, 1500);
   },
+
+  flashAllLeds(led, button) {
+
+    this.state.endMobile.style.animation = `${button} .4s infinite`;
+    this.state.endDesktop.style.animation = `${button} .4s infinite`;
+    if(led == 'ledIncorrect') {
+      this.state.endMobile.innerText = 'PERDEU';
+      this.state.endDesktop.innerText = 'PERDEU';
+    } else {
+      this.state.endDesktop.innerText = 'PARABÉNS';
+      this.state.endMobile.innerText = 'PARABÉNS';
+    }
+
+    this.state.ledsComputer.forEach((element, index) => {
+      element.classList.remove('pontoCorreto');
+      this.state.ledsPlayer[index].classList.remove('pontoCorreto');
+      
+      element.style.animation = `${led} .4s infinite`
+      this.state.ledsPlayer[index].style.animation = `${led} .4s infinite`;   
+    });
+
+    this.state.panelComputer.forEach((element, index) => {
+      element.style.animation = `${button} .4s infinite`;
+      this.state.panelPlayer[index].style.animation = `${button} .4s infinite`;     
+    });     
+  }
 }
 
 export default game;
