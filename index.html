@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="pr-br">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="favicon.ico" />
+    <title>Memory Game</title>
+    <link rel="stylesheet" href="./styles/styles.css">
+  </head>
+
+  <body>
+   <div class="container">
+     <div class="placar-container">
+      <div class="pontos led-computer"></div>
+      <div class="pontos led-computer"></div>
+      <div class="pontos led-computer"></div>
+      <div class="pontos led-computer"></div>
+      <div class="pontos led-computer"></div>
+      <div class="pontos led-computer"></div>
+     </div>
+      <div class="panel">
+        <div class="button-cumputer block"></div>
+        <div class="button-cumputer block"></div>
+        <div class="button-cumputer block"></div> 
+        <div class="button-cumputer block"></div>
+        <div class="button-cumputer block"></div>
+        <div class="button-cumputer block"></div>
+        <div class="button-cumputer block"></div>
+        <div class="button-cumputer block"></div>
+        <div class="button-cumputer block"></div>
+      </div>
+   </div>
+
+   <button id="play" class="play">Jogar</button>
+   <button id="end" class="end hide-button">Parar</button>
+
+   <div class="container">
+    <div class="placar-container">
+      <div class="pontos led-player"></div>
+      <div class="pontos led-player"></div>
+      <div class="pontos led-player"></div>
+      <div class="pontos led-player"></div>
+      <div class="pontos led-player"></div>
+      <div class="pontos led-player"></div>
+    </div>
+    <div class="panel">
+      <div class="button-player block"></div>
+      <div class="button-player block"></div>
+      <div class="button-player block"></div>
+      <div class="button-player block"></div>
+      <div class="button-player block"></div>
+      <div class="button-player block"></div>
+      <div class="button-player block"></div>
+      <div class="button-player block"></div>
+      <div class="button-player block"></div>
+    </div>
+  </div>
+
+  <script type="module">
+
+    import game from './js/memory-game.js';
+
+
+    const play = document.getElementById('play');
+    const end = document.getElementById('end');
+    
+    play.addEventListener('click', () => game.startGame(play, end));
+    end.addEventListener('click', () => game.resetGame());
+
+  </script>
+  </body>
+</html>
