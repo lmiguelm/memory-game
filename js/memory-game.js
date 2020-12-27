@@ -26,7 +26,7 @@ const game = {
   },
 
   loadAudio(filename) {
-    const file = `../audio/${filename}?cb=${new Date().getTime()}`;
+    const file = `./audio/${filename}?cb=${new Date().getTime()}`;
     const audio = new Audio(file);
     audio.load();
     return audio;
